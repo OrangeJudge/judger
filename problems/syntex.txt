@@ -1,0 +1,5 @@
+1 # time-stamp
+0 # 1 for special judge
+2 # number of test cases
+in1.txt|out1.txt|1|256 # in|out|time|memory
+in2.txt|out2.txt|1|256
