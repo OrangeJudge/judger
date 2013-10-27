@@ -1,5 +1,5 @@
-ojnyJudger
-==========
+ojny Judger
+===========
 
 Description
 -----------
@@ -21,3 +21,8 @@ Judge Result
 - 203 Memory Exceeded
 - 204 Wrong Answer
 - 205 Unknown Error
+
+Author
+------
+
+This project is developed by 'ojny', who is running ojny.org.
