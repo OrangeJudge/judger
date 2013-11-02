@@ -64,6 +64,10 @@ public class Runner implements Runnable {
                 return;
             }
         }
+
+        submit.status = 100;
+        submit.finishTime = new Date();
+        submit.save();
     }
 
     public void readProblem() {

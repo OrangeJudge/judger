@@ -12,7 +12,8 @@ public class Judger {
             List<Submit> submitList = Submit.find.where("status = 1").findList();
             if (submitList.size() > 0) {
                 Runner runner = new Runner(submitList.get(0));
-                runner.run();
+                Thread thread = new Thread(runner);
+                thread.run();
                 /*
                 Akka.system().scheduler().scheduleOnce(
                         Duration.create(10, TimeUnit.MILLISECONDS),
