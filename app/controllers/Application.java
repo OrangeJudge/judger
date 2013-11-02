@@ -49,8 +49,16 @@ public class Application extends Controller {
         } catch (NumberFormatException ex) {
             result.put("error", 2001);
             result.put("message", "[NumberFormatException]" + ex.getMessage());
+        } catch (Exception ex) {
+            result.put("error", 3001);
+            result.put("message", "[UnknownException]" + ex.getMessage());
         }
         return ok(result);
     }
 
+    public static Result status() {
+        ObjectNode result = Json.newObject();
+        result.put("submits", Json.toJson(Submit.find.all()));
+        return ok(result);
+    }
 }

@@ -3,10 +3,13 @@ package judger;
 import judger.languages.LangC;
 import models.Submit;
 import org.h2.store.fs.FileUtils;
+import utils.OJException;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.util.Date;
 
 public class Runner extends Thread {
     public Submit submit;
@@ -17,20 +20,27 @@ public class Runner extends Thread {
 
     public void run() {
         System.out.println("run " + submit.id);
-        compile();
-        submit.status = 2;
+        System.out.println(submit.source);
+        /*
+        try {
+            String source = new String(submit.source);
+            compile(source);
+            // submit.status = 100;
+        } catch (OJException ex) {
+            // submit.status = ex.getCode();
+            // submit.detail = ex.getMessage();
+        }
+        */
+        submit.finishTime = new Date();
+        submit.status = 100;
         submit.save();
         System.out.println("ran " + submit.id);
         Judger.running = false;
         Judger.start();
     }
 
-    public void compile() {
-        System.out.println("compile " + submit.id);
-        System.out.println(submit.source);
-        String source = submit.source;
-        // Fatal error would happen if we directly use submit.source.
-        // Anyone got any idea?
+    public void compile(String source) throws OJException {
+        String error = null;
         switch (submit.language) {
             case 0: {
                 try {
@@ -41,6 +51,17 @@ public class Runner extends Thread {
                     writer.close();
                     LangC langC = new LangC();
                     langC.compile();
+                    File compiled = new File("temp/exroot/a.out");
+                    if (compiled.exists()) {
+                        return;
+                    } else {
+                        File compileErrorFile = new File("/temp/exroot/compile_err.txt");
+                        FileInputStream fis = new FileInputStream(compileErrorFile);
+                        byte[] data = new byte[(int)compileErrorFile.length()];
+                        fis.read(data);
+                        fis.close();
+                        error = new String(data, "UTF-8");
+                    }
                 } catch (FileNotFoundException e) {
                     System.out.print("File not found");
                 } catch (Exception e) {
@@ -49,5 +70,6 @@ public class Runner extends Thread {
                 break;
             }
         }
+        throw new OJException(200, error);
     }
 }

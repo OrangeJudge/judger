@@ -1,9 +1,37 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title></title>
+    <title>Submit Test</title>
+    <link rel="stylesheet" href="/assets/stylesheets/test.css">
 </head>
 <body>
-
+<h1>Submit Test</h1>
+<form id="submit-form">
+    <div>
+        <label for="id">Submit Id</label>
+        <input id="id" name="id">
+    </div>
+    <div>
+        <label for="problemId">Problem Id</label>
+        <input id="problemId" name="problemId">
+    </div>
+    <div>
+        <label for="problemTimeStamp">Problem Time Stamp</label>
+        <input id="problemTimeStamp" name="problemTimeStamp">
+    </div>
+    <div>
+        <label for="language">Language</label>
+        <input id="language" name="language">
+    </div>
+    <div>
+        <label for="source">Source</label>
+        <textarea id="source" name="source"></textarea>
+    </div>
+    <div>
+        <input type="submit" value="Submit">
+    </div>
+</form>
+<script src="/assets/javascripts/jquery-2.0.3.min.js"></script>
+<script src="/assets/javascripts/test.js"></script>
 </body>
 </html>

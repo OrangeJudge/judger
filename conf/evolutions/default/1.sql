@@ -10,6 +10,7 @@ create table submit (
   problem_id                integer,
   problem_time_stamp        bigint,
   create_time               timestamp,
+  finish_time               timestamp,
   status                    integer,
   detail                    varchar(255),
   constraint pk_submit primary key (id))

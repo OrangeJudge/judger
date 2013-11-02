@@ -20,6 +20,7 @@ public class Submit extends Model {
     // problem time stamp is to ensure the problem data of judger is up to date.
 
     public Date createTime;
+    public Date finishTime;
 
     public int status;
     public String detail;
