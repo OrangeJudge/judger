@@ -2,5 +2,5 @@ package judger.languages;
 
 public abstract class Language {
     public abstract void compile();
-    public abstract void execute();
+    public abstract void execute(int timeLimit, int memoryLimit);
 }

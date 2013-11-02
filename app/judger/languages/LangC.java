@@ -23,7 +23,7 @@ public class LangC extends Language {
             e.printStackTrace();
         }
     }
-    public void execute() {
+    public void execute(int timeLimit, int memoryLimit) {
         try {
             PrintWriter writer = new PrintWriter(new File("temp/run.sh"));
             writer.println("cd temp/exroot");
