@@ -16,11 +16,13 @@ public class Submit extends Model {
 
     public int problemId;
     public long problemTimeStamp;
+    // problem time stamp is to ensure the problem data of judger is up to date.
 
     public Date createTime;
 
     public int status;
     public String detail;
+    // detail includes possible judging outputs.
 
     public Submit() {
         status = 0;
