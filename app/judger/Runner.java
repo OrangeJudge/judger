@@ -5,10 +5,7 @@ import models.Submit;
 import org.h2.store.fs.FileUtils;
 import utils.OJException;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.util.Date;
 
 public class Runner implements Runnable {
@@ -77,8 +74,10 @@ public class Runner implements Runnable {
                     }
                 } catch (FileNotFoundException e) {
                     System.out.print("File not found");
-                } catch (Exception e) {
-                    System.out.print("Unknown exception");
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
                 break;
             }
