@@ -11,11 +11,11 @@ public class Runner extends Thread {
 
     public void run() {
         try {
-            Thread.sleep(5000);
+            Thread.sleep(2000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        submit.status = 1;
+        submit.status = 2;
         submit.save();
         System.out.println("ran " + submit.id);
         Judger.running = false;

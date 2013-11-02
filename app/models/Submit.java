@@ -20,7 +20,7 @@ public class Submit extends Model {
 
     public Date createTime;
 
-    public int status = 0;
+    public int status = 1;
     public String detail;
     // detail includes possible judging outputs.
 

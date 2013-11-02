@@ -9,7 +9,7 @@ public class Judger {
     public static void start() {
         if (!running) {
             running = true;
-            List<Submit> submitList = Submit.find.where("status = 0").findList();
+            List<Submit> submitList = Submit.find.where("status = 1").findList();
             if (submitList.size() > 0) {
                 Runner runner = new Runner(submitList.get(0));
                 runner.start();
