@@ -130,7 +130,7 @@ public class Runner implements Runnable {
             LangC langC = new LangC();
             langC.execute(Integer.parseInt(testCase[2]), Integer.parseInt(testCase[3]));
             if (!compareFile(out, new File("temp/exroot/out.txt"))) {
-                throw new OJException(2004, "Wrong Answer on Test " + i);
+                throw new OJException(204, "Wrong Answer on Test " + i);
             }
         } catch (IOException e) {
             e.printStackTrace();
