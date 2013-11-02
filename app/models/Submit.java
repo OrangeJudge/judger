@@ -11,6 +11,7 @@ import java.util.Date;
 public class Submit extends Model {
     @Id
     public long id;
+    public int language;
     @Lob
     public String source;
 

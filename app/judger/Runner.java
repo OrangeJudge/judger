@@ -21,4 +21,8 @@ public class Runner extends Thread {
         Judger.running = false;
         Judger.start();
     }
+
+    public void compile() {
+
+    }
 }

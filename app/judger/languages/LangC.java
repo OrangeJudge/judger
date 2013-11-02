@@ -5,12 +5,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 public class LangC extends Language {
-    private int timeLimit;
-    private int memoryLimit;
-    public LangC(int theTimeLimit, int theMemoryLimit) {
-        timeLimit = theTimeLimit;
-        memoryLimit = theMemoryLimit;
-    }
     public void compile() {
         try {
             PrintWriter writer = new PrintWriter(new File("temp/compile.sh"));
