@@ -9,12 +9,16 @@ import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
 import utils.OJException;
-import views.html.index;
+import views.html.test;
 
 public class Application extends Controller {
 
     public static Result index() {
-        return ok(index.render("Your new application is ready."));
+        return ok("Judger is running.");
+    }
+
+    public static Result test() {
+        return ok(test.render());
     }
 
     public static Result submit() {
@@ -35,6 +39,7 @@ public class Application extends Controller {
             submit.problemId = problemId;
             submit.problemTimeStamp = problemTimeStamp;
             submit.source = source;
+            System.out.println(submit.source);
             submit.save();
             Judger.start();
             result.put("error", 0);

@@ -5,6 +5,8 @@
 # Home page
 GET     /                           controllers.Application.index()
 
+GET     /test                       controllers.Application.test()
+
 POST    /submit                     controllers.Application.submit()
 
 # Map static resources from the /public folder to the /assets URL path

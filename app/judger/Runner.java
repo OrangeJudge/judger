@@ -16,6 +16,7 @@ public class Runner extends Thread {
     }
 
     public void run() {
+        System.out.println("run " + submit.id);
         compile();
         submit.status = 2;
         submit.save();
@@ -25,18 +26,25 @@ public class Runner extends Thread {
     }
 
     public void compile() {
+        System.out.println("compile " + submit.id);
+        System.out.println(submit.source);
+        String source = submit.source;
+        // Fatal error would happen if we directly use submit.source.
+        // Anyone got any idea?
         switch (submit.language) {
             case 0: {
                 try {
                     FileUtils.deleteRecursive("temp", true);
                     (new File("temp/exroot")).mkdirs();
                     PrintWriter writer = new PrintWriter(new File("temp/exroot/submit.c"));
-                    writer.print(submit.source);
+                    writer.print(source);
                     writer.close();
                     LangC langC = new LangC();
-                    // langC.compile();
+                    langC.compile();
                 } catch (FileNotFoundException e) {
-                    e.printStackTrace();
+                    System.out.print("File not found");
+                } catch (Exception e) {
+                    System.out.print("Unknown exception");
                 }
                 break;
             }
