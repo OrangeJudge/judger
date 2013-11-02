@@ -3,6 +3,7 @@ package judger;
 import judger.languages.LangC;
 import models.Submit;
 import org.h2.store.fs.FileUtils;
+import utils.OJException;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -27,18 +28,23 @@ public class Runner implements Runnable {
     }
 
     public void judge() {
-        compile();
-        submit.status = 100;
+        try {
+            compile();
+            submit.status = 100;
+        } catch (OJException e) {
+            submit.status = e.getCode();
+            submit.detail = e.getMessage();
+        }
         submit.finishTime = new Date();
         submit.save();
     }
 
-    public boolean compile() {
+    public void compile() throws OJException {
         try {
+            FileUtils.deleteRecursive("temp", true);
+            (new File("temp/exroot")).mkdirs();
             switch (submit.language) {
                 case 0: {
-                    FileUtils.deleteRecursive("temp", true);
-                    (new File("temp/exroot")).mkdirs();
                     PrintWriter writer = new PrintWriter(new File("temp/exroot/submit.c"));
                     writer.print(submit.source);
                     writer.close();
@@ -46,7 +52,7 @@ public class Runner implements Runnable {
                     langC.compile();
                     File compiled = new File("temp/exroot/a.out");
                     if (compiled.exists()) {
-                        return true;
+                        return;
                     } else {
                         File compileErrorFile = new File("temp/exroot/compile_err.txt");
                         FileInputStream fis = new FileInputStream(compileErrorFile);
@@ -54,14 +60,17 @@ public class Runner implements Runnable {
                         fis.read(data);
                         fis.close();
                         String error = new String(data, "UTF-8");
-                        submit.detail = error;
+                        throw new OJException(200, error);
                     }
-                    break;
                 }
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return false;
+        throw new OJException(200);
+    }
+
+    public void execute() {
+
     }
 }
