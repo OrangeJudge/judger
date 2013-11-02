@@ -30,23 +30,43 @@ public class Runner implements Runnable {
     }
 
     public void judge() {
+        OJException oje = null;
         readProblem();
+        submit.status = 2;
         try {
-            submit.status = 2;
             compile();
         } catch (OJException e) {
-            submit.status = e.getCode();
-            submit.detail = e.getMessage();
-        } finally {
+            oje = e;
+        }
+        if (oje != null) {
+            submit.status = oje.getCode();
+            submit.detail = oje.getMessage();
+            submit.finishTime = new Date();
+            submit.save();
+            return;
+        } else {
+            submit.status = 3;
             submit.finishTime = new Date();
             submit.save();
         }
-        if (submit.status >= 100) return;
+
+        for (int i = 0; i < this.tests; i++) {
+            try {
+                execute(i);
+            } catch (OJException e) {
+                oje = e;
+            }
+            if (oje != null) {
+                submit.status = oje.getCode();
+                submit.detail = oje.getMessage();
+                submit.finishTime = new Date();
+                submit.save();
+                return;
+            }
+        }
         /*
         try {
-            submit.status = 3;
-            for (int i = 0; i < this.tests; i++) {
-                execute(i);
+
             }
         } catch (OJException e) {
             submit.status = e.getCode();
@@ -117,6 +137,7 @@ public class Runner implements Runnable {
             copyFile(in, inTest);
             LangC langC = new LangC();
             langC.execute(Integer.parseInt(testCase[2]), Integer.parseInt(testCase[3]));
+            throw new OJException(201);
         } catch (IOException e) {
             e.printStackTrace();
         }
