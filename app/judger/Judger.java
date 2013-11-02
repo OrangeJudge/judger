@@ -11,8 +11,15 @@ public class Judger {
             running = true;
             List<Submit> submitList = Submit.find.where("status = 1").findList();
             if (submitList.size() > 0) {
-                Thread runner = new Thread(new Runner(submitList.get(0)));
-                runner.start();
+                Runner runner = new Runner(submitList.get(0));
+                runner.run();
+                /*
+                Akka.system().scheduler().scheduleOnce(
+                        Duration.create(10, TimeUnit.MILLISECONDS),
+                        runner,
+                        Akka.system().dispatcher()
+                );
+                */
             } else {
                 running = false;
             }

@@ -5,6 +5,7 @@ public class OJException extends Exception {
     private String message;
     public OJException(int code) {
         this.code = code;
+        this.message = "";
     }
     public OJException(int code, String message) {
         this.code = code;

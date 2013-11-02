@@ -35,9 +35,11 @@ public class Runner implements Runnable {
         try {
             compile();
             submit.status = 3;
+            /*
             for (int i = 0; i < this.tests; i++) {
-                //execute(i);
+                execute(i);
             }
+            */
         } catch (OJException e) {
             submit.status = e.getCode();
             submit.detail = e.getMessage();
@@ -60,7 +62,7 @@ public class Runner implements Runnable {
                 this.testDetail[i] = scanner.nextLine();
             }
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            // e.printStackTrace();
         }
     }
 
@@ -90,14 +92,14 @@ public class Runner implements Runnable {
                 }
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            // e.printStackTrace();
         }
         throw new OJException(200);
     }
 
+    /*
     public void execute(int i) throws OJException {
         System.out.println("execute " + i);
-        /*
         try {
             String[] testCase = this.testDetail[i].split("\\|");
             File in = new File("problems/" + submit.problemId + "/files/" + testCase[0]);
@@ -109,8 +111,8 @@ public class Runner implements Runnable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        */
     }
+        */
 
     public static void copyFile(File sourceFile, File destFile) throws IOException {
         if(!destFile.exists()) {
