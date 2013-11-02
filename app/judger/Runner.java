@@ -64,18 +64,6 @@ public class Runner implements Runnable {
                 return;
             }
         }
-        /*
-        try {
-
-            }
-        } catch (OJException e) {
-            submit.status = e.getCode();
-            submit.detail = e.getMessage();
-        } finally {
-            submit.finishTime = new Date();
-            submit.save();
-        }
-        */
     }
 
     public void readProblem() {
@@ -137,7 +125,9 @@ public class Runner implements Runnable {
             copyFile(in, inTest);
             LangC langC = new LangC();
             langC.execute(Integer.parseInt(testCase[2]), Integer.parseInt(testCase[3]));
-            throw new OJException(201);
+            if (!compareFile(out, new File("temp/exroot/out.txt"))) {
+                throw new OJException(2004, "Wrong Answer on Test " + i);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -164,5 +154,23 @@ public class Runner implements Runnable {
                 destination.close();
             }
         }
+    }
+
+    public static boolean compareFile(File file1, File file2) {
+        String str1 = null, str2 = null;
+        try {
+            str1 = readFromFile(file1);
+            str2 = readFromFile(file2);
+        } catch (IOException e) {
+        }
+        return str1.equals(str2);
+    }
+
+    public static String readFromFile(File file) throws IOException {
+        FileInputStream fis = new FileInputStream(file);
+        byte[] data = new byte[(int)file.length()];
+        fis.read(data);
+        fis.close();
+        return new String(data, "UTF-8");
     }
 }
