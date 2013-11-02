@@ -6,6 +6,13 @@ Description
 
 This project would be used in ojny.org.
 
+Languages
+---------
+
+- 0 C gcc
+- 1 C++ g++
+- 2 Java Java 1.7
+
 Judge Result
 ------------
 
