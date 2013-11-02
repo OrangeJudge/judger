@@ -30,22 +30,32 @@ public class Runner implements Runnable {
     }
 
     public void judge() {
-        submit.status = 2;
         readProblem();
         try {
+            submit.status = 2;
             compile();
-            submit.status = 3;
-            /*
-            for (int i = 0; i < this.tests; i++) {
-                execute(i);
-            }
-            */
         } catch (OJException e) {
             submit.status = e.getCode();
             submit.detail = e.getMessage();
+        } finally {
+            submit.finishTime = new Date();
+            submit.save();
         }
-        submit.finishTime = new Date();
-        submit.save();
+        if (submit.status >= 100) return;
+        /*
+        try {
+            submit.status = 3;
+            for (int i = 0; i < this.tests; i++) {
+                execute(i);
+            }
+        } catch (OJException e) {
+            submit.status = e.getCode();
+            submit.detail = e.getMessage();
+        } finally {
+            submit.finishTime = new Date();
+            submit.save();
+        }
+        */
     }
 
     public void readProblem() {
@@ -62,7 +72,7 @@ public class Runner implements Runnable {
                 this.testDetail[i] = scanner.nextLine();
             }
         } catch (FileNotFoundException e) {
-            // e.printStackTrace();
+            e.printStackTrace();
         }
     }
 
@@ -92,12 +102,11 @@ public class Runner implements Runnable {
                 }
             }
         } catch (IOException e) {
-            // e.printStackTrace();
+            e.printStackTrace();
         }
         throw new OJException(200);
     }
 
-    /*
     public void execute(int i) throws OJException {
         System.out.println("execute " + i);
         try {
@@ -112,7 +121,6 @@ public class Runner implements Runnable {
             e.printStackTrace();
         }
     }
-        */
 
     public static void copyFile(File sourceFile, File destFile) throws IOException {
         if(!destFile.exists()) {
