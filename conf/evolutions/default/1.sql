@@ -5,6 +5,7 @@
 
 create table submit (
   id                        bigint not null,
+  language                  integer,
   source                    clob,
   problem_id                integer,
   problem_time_stamp        bigint,

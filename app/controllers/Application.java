@@ -23,6 +23,7 @@ public class Application extends Controller {
         try {
             String source = requestData.get("source");
             long id = Long.parseLong(requestData.get("id"));
+            int language = Integer.parseInt(requestData.get("language"));
             int problemId = Integer.parseInt(requestData.get("problemId"));
             long problemTimeStamp = Long.parseLong(requestData.get("problemTimeStamp"));
             Submit find = Submit.find.byId(id);
