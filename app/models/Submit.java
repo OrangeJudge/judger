@@ -20,7 +20,7 @@ public class Submit extends Model {
 
     public Date createTime;
 
-    public int status;
+    public int status = 0;
     public String detail;
     // detail includes possible judging outputs.
 
@@ -28,4 +28,6 @@ public class Submit extends Model {
         status = 0;
         createTime = new Date();
     }
+
+    public static Finder<Long, Submit> find = new Finder<Long, Submit>(Long.class, Submit.class);
 }
