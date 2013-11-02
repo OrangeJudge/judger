@@ -11,7 +11,7 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.Date;
 
-public class Runner extends Thread {
+public class Runner implements Runnable {
     public Submit submit;
 
     public Runner(Submit submit) {
@@ -23,14 +23,14 @@ public class Runner extends Thread {
         System.out.println(submit.source);
         /*
         try {
-            String source = new String(submit.source);
-            compile(source);
-            // submit.status = 100;
+            compile();
+            submit.status = 100;
         } catch (OJException ex) {
-            // submit.status = ex.getCode();
-            // submit.detail = ex.getMessage();
+            submit.status = ex.getCode();
+            submit.detail = ex.getMessage();
         }
         */
+        test();
         submit.finishTime = new Date();
         submit.status = 100;
         submit.save();
@@ -39,7 +39,20 @@ public class Runner extends Thread {
         Judger.start();
     }
 
-    public void compile(String source) throws OJException {
+    public void test() {
+        FileUtils.deleteRecursive("temp", true);
+        (new File("temp/exroot")).mkdirs();
+        /*
+        try {
+            PrintWriter writer = new PrintWriter(new File("temp/exroot/submit.c"));
+            writer.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        */
+    }
+
+    public void compileSubmit() throws OJException {
         String error = null;
         switch (submit.language) {
             case 0: {
@@ -47,7 +60,7 @@ public class Runner extends Thread {
                     FileUtils.deleteRecursive("temp", true);
                     (new File("temp/exroot")).mkdirs();
                     PrintWriter writer = new PrintWriter(new File("temp/exroot/submit.c"));
-                    writer.print(source);
+                    writer.print(submit.source);
                     writer.close();
                     LangC langC = new LangC();
                     langC.compile();

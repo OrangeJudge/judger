@@ -11,7 +11,7 @@ public class Judger {
             running = true;
             List<Submit> submitList = Submit.find.where("status = 1").findList();
             if (submitList.size() > 0) {
-                Runner runner = new Runner(submitList.get(0));
+                Thread runner = new Thread(new Runner(submitList.get(0)));
                 runner.start();
             } else {
                 running = false;
