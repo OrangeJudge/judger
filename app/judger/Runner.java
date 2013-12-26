@@ -32,7 +32,7 @@ public class Runner implements Runnable {
     public void judge() {
         OJException oje = null;
         readProblem();
-        submit.status = 2;
+        submit.status = 102;
         try {
             compile();
         } catch (OJException e) {
@@ -45,7 +45,7 @@ public class Runner implements Runnable {
             submit.save();
             return;
         } else {
-            submit.status = 3;
+            submit.status = 103;
             submit.finishTime = new Date();
             submit.save();
         }
@@ -65,7 +65,7 @@ public class Runner implements Runnable {
             }
         }
 
-        submit.status = 100;
+        submit.status = 200;
         submit.finishTime = new Date();
         submit.save();
     }
@@ -130,7 +130,7 @@ public class Runner implements Runnable {
             LangC langC = new LangC();
             langC.execute(Integer.parseInt(testCase[2]), Integer.parseInt(testCase[3]));
             if (!compareFile(out, new File("temp/exroot/out.txt"))) {
-                throw new OJException(204, "Wrong Answer on Test " + i);
+                throw new OJException(304, "Wrong Answer on Test " + i);
             }
         } catch (IOException e) {
             e.printStackTrace();
