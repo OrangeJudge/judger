@@ -2,6 +2,8 @@ package judger;
 
 import judger.languages.LangC;
 import org.h2.store.fs.FileUtils;
+import play.libs.Json;
+import play.libs.WS;
 import utils.OJException;
 
 import java.io.*;
@@ -25,6 +27,7 @@ public class Runner implements Runnable {
             System.out.println(submit.source);
             System.out.println("ran " + submit.id);
             judge();
+            WS.url("http://localhost:9000/judger/updateSubmit").post(Json.toJson(submit));
         }
     }
 
