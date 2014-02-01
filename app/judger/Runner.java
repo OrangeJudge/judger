@@ -1,7 +1,6 @@
 package judger;
 
 import judger.languages.LangC;
-import models.Submit;
 import org.h2.store.fs.FileUtils;
 import utils.OJException;
 
@@ -21,12 +20,12 @@ public class Runner implements Runnable {
     }
 
     public void run() {
-        System.out.println("run " + submit.id);
-        System.out.println(submit.source);
-        System.out.println("ran " + submit.id);
-        judge();
-        Judger.running = false;
-        Judger.start();
+        synchronized (Runner.class) {
+            System.out.println("run " + submit.id);
+            System.out.println(submit.source);
+            System.out.println("ran " + submit.id);
+            judge();
+        }
     }
 
     public void judge() {
@@ -42,12 +41,10 @@ public class Runner implements Runnable {
             submit.status = oje.getCode();
             submit.detail = oje.getMessage();
             submit.finishTime = new Date();
-            submit.save();
             return;
         } else {
             submit.status = 103;
             submit.finishTime = new Date();
-            submit.save();
         }
 
         for (int i = 0; i < this.tests; i++) {
@@ -60,14 +57,12 @@ public class Runner implements Runnable {
                 submit.status = oje.getCode();
                 submit.detail = oje.getMessage();
                 submit.finishTime = new Date();
-                submit.save();
                 return;
             }
         }
 
         submit.status = 200;
         submit.finishTime = new Date();
-        submit.save();
     }
 
     public void readProblem() {
@@ -166,6 +161,8 @@ public class Runner implements Runnable {
             str1 = readFromFile(file1);
             str2 = readFromFile(file2);
         } catch (IOException e) {
+            e.printStackTrace();
+            return false;
         }
         return str1.equals(str2);
     }

@@ -1,18 +1,10 @@
-package models;
+package judger;
 
-import play.db.ebean.Model;
-
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Lob;
 import java.util.Date;
 
-@Entity
-public class Submit extends Model {
-    @Id
+public class Submit {
     public long id;
     public int language;
-    @Lob
     public String source;
 
     public int problemId;
@@ -30,6 +22,4 @@ public class Submit extends Model {
         status = 101;
         createTime = new Date();
     }
-
-    public static Finder<Long, Submit> find = new Finder<Long, Submit>(Long.class, Submit.class);
 }

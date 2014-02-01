@@ -1,12 +1,17 @@
 package judger;
 
-import models.Submit;
-
 import java.util.List;
 
 public class Judger {
-    public static boolean running = false;
+    public static List<Submit> submits;
+
+    public static void judge(Submit submit) {
+        (new Thread(new Runner(submit))).start();
+    }
+
+    /*
     public static void start() {
+
         if (!running) {
             running = true;
             List<Submit> submitList = Submit.find.where("status = 1").findList();
@@ -20,10 +25,15 @@ public class Judger {
                         runner,
                         Akka.system().dispatcher()
                 );
-                */
             } else {
                 running = false;
             }
         }
+    }
+    */
+
+    public static Submit findSubmitById(long id) {
+        for (Submit s : submits) if (s.id == id) return s;
+        return null;
     }
 }

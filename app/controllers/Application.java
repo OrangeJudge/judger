@@ -2,7 +2,7 @@ package controllers;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import judger.Judger;
-import models.Submit;
+import judger.Submit;
 import play.data.DynamicForm;
 import play.data.Form;
 import play.libs.Json;
@@ -30,7 +30,7 @@ public class Application extends Controller {
             int language = Integer.parseInt(requestData.get("language"));
             int problemId = Integer.parseInt(requestData.get("problemId"));
             long problemTimeStamp = Long.parseLong(requestData.get("problemTimeStamp"));
-            Submit find = Submit.find.byId(id);
+            Submit find = Judger.findSubmitById(id);
             if (find != null) {
                 throw new OJException(1001, "Submit is in queue.");
             }
@@ -40,8 +40,7 @@ public class Application extends Controller {
             submit.problemTimeStamp = problemTimeStamp;
             submit.source = source;
             System.out.println(submit.source);
-            submit.save();
-            Judger.start();
+            Judger.judge(submit);
             result.put("error", 0);
         } catch (OJException ex) {
             result.put("error", ex.getCode());
@@ -58,7 +57,7 @@ public class Application extends Controller {
 
     public static Result status() {
         ObjectNode result = Json.newObject();
-        result.put("submits", Json.toJson(Submit.find.all()));
+        result.put("submits", Json.toJson(Judger.submits));
         return ok(result);
     }
 }
