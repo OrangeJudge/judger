@@ -1,11 +1,13 @@
 package judger;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Judger {
-    public static List<Submit> submits;
+    public static List<Submit> submits = new ArrayList<Submit>();
 
     public static void judge(Submit submit) {
+        submits.add(submit);
         (new Thread(new Runner(submit))).start();
     }
 

@@ -50,6 +50,7 @@ public class Application extends Controller {
             result.put("message", "[NumberFormatException]" + ex.getMessage());
         } catch (Exception ex) {
             result.put("error", 3001);
+            ex.printStackTrace();
             result.put("message", "[UnknownException]" + ex.getMessage());
         }
         return ok(result);
