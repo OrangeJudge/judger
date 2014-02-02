@@ -1,6 +1,7 @@
 package judger;
 
 import judger.languages.LangC;
+import judger.languages.Language;
 import org.h2.store.fs.FileUtils;
 import play.libs.Json;
 import play.libs.WS;
@@ -16,6 +17,8 @@ public class Runner implements Runnable {
     public boolean specialJudge;
     public int tests;
     public String[] testDetail;
+
+    Language language;
 
     public Runner(Submit submit) {
         this.submit = submit;
@@ -40,6 +43,8 @@ public class Runner implements Runnable {
         readProblem();
         submit.status = 101;
         updateSubmit();
+
+        language = new LangC();
 
         try {
             compile();
@@ -103,20 +108,8 @@ public class Runner implements Runnable {
                     PrintWriter writer = new PrintWriter(new File("temp/exroot/submit.c"));
                     writer.print(submit.source);
                     writer.close();
-                    LangC langC = new LangC();
-                    langC.compile();
-                    File compiled = new File("temp/exroot/a.out");
-                    if (compiled.exists()) {
-                        return;
-                    } else {
-                        File compileErrorFile = new File("temp/exroot/compile_err.txt");
-                        FileInputStream fis = new FileInputStream(compileErrorFile);
-                        byte[] data = new byte[(int)compileErrorFile.length()];
-                        fis.read(data);
-                        fis.close();
-                        String error = new String(data, "UTF-8");
-                        throw new OJException(300, error);
-                    }
+                    language.compile();
+                    return;
                 }
             }
         } catch (IOException e) {
@@ -133,10 +126,9 @@ public class Runner implements Runnable {
             File out = new File("problems/" + submit.problemId + "/files/" + testCase[1]);
             File inTest = new File("temp/exroot/in.txt");
             copyFile(in, inTest);
-            LangC langC = new LangC();
-            langC.execute(Integer.parseInt(testCase[2]), Integer.parseInt(testCase[3]));
+            language.execute(Integer.parseInt(testCase[2]), Integer.parseInt(testCase[3]));
             if (!compareFile(out, new File("temp/exroot/out.txt"))) {
-                throw new OJException(304, "Wrong Answer on Test " + i);
+                throw new OJException(304, "Wrong Answer on Test " + (i+1));
             }
         } catch (IOException e) {
             e.printStackTrace();

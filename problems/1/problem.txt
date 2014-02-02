@@ -1,5 +1,5 @@
 1
 0
 2
-in1.txt|out1.txt|1|256
-in2.txt|out2.txt|1|256
+in1.txt|out1.txt|1000|256
+in2.txt|out2.txt|1000|256
