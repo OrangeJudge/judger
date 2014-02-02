@@ -26,6 +26,7 @@ public class Application extends Controller {
         DynamicForm requestData = Form.form().bindFromRequest();
         try {
             String source = requestData.get("source");
+            String server = requestData.get("server");
             long id = Long.parseLong(requestData.get("id"));
             int language = Integer.parseInt(requestData.get("language"));
             int problemId = Integer.parseInt(requestData.get("problemId"));
@@ -39,6 +40,7 @@ public class Application extends Controller {
             submit.problemId = problemId;
             submit.problemTimeStamp = problemTimeStamp;
             submit.source = source;
+            submit.server = server;
             System.out.println(submit.source);
             Judger.judge(submit);
             result.put("error", 0);

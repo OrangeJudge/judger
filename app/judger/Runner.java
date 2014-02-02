@@ -31,6 +31,7 @@ public class Runner implements Runnable {
             System.out.println("ran " + submit.id);
             judge();
             updateSubmit();
+            Judger.deleteSubmit(submit);
         }
     }
 
