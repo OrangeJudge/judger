@@ -16,11 +16,9 @@ Languages
 Judge Result
 ------------
 
-- 100 Judger Not Responding
-- 101 Waiting
-- 102 Compiling
-- 103 Judging
-- 104 Cancel
+- 100 Waiting
+- 101 Compiling
+- 102 Judging
 - 200 Accepted
 - 300 Compile Error
 - 301 Runtime Error
@@ -28,6 +26,8 @@ Judge Result
 - 303 Memory Exceeded
 - 304 Wrong Answer
 - 305 Unknown Error
+- 400 Cancel
+- 401 Judger Not Responding
 
 Author
 ------
