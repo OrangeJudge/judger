@@ -4,6 +4,8 @@ import java.util.Date;
 
 public class Submit {
     public long id;
+    public String server; // the address that post result to.
+
     public int language;
     public String source;
 
