@@ -27,14 +27,20 @@ public class Runner implements Runnable {
             System.out.println(submit.source);
             System.out.println("ran " + submit.id);
             judge();
-            WS.url("http://localhost:9000/judger/updateSubmit").post(Json.toJson(submit));
+            updateSubmit();
         }
+    }
+
+    public void updateSubmit() {
+        WS.url("http://localhost:9000/judger/updateSubmit").post(Json.toJson(submit));
     }
 
     public void judge() {
         OJException oje = null;
         readProblem();
-        submit.status = 102;
+        submit.status = 101;
+        updateSubmit();
+
         try {
             compile();
         } catch (OJException e) {
@@ -46,9 +52,11 @@ public class Runner implements Runnable {
             submit.finishTime = new Date();
             return;
         } else {
-            submit.status = 103;
+            submit.status = 102;
             submit.finishTime = new Date();
         }
+
+        updateSubmit();
 
         for (int i = 0; i < this.tests; i++) {
             try {
@@ -107,14 +115,14 @@ public class Runner implements Runnable {
                         fis.read(data);
                         fis.close();
                         String error = new String(data, "UTF-8");
-                        throw new OJException(200, error);
+                        throw new OJException(300, error);
                     }
                 }
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-        throw new OJException(200);
+        throw new OJException(300);
     }
 
     public void execute(int i) throws OJException {

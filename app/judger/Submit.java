@@ -19,7 +19,7 @@ public class Submit {
     // detail includes possible judging outputs.
 
     public Submit() {
-        status = 101;
+        status = 100;
         createTime = new Date();
     }
 }
