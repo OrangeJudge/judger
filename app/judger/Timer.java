@@ -22,17 +22,20 @@ public class Timer extends Thread {
     // Sleep until timeout and then terminate the process
     public void run() {
         try {
-            System.out.println("sleep " + timeLimit);
+            System.out.println("[Timer] sleep " + timeLimit);
             sleep(timeLimit);
+            System.out.println("[Timer] time out");
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
         try {
-            language.timeLimitExceeded = false;
             process.exitValue();
+            language.timeLimitExceeded = false;
         } catch (IllegalThreadStateException e) {
             language.timeLimitExceeded = true;
+            System.out.println("[Timer] try to destroy process.");
             process.destroy();
+            System.out.println("[Timer] destroyed process.");
         }
     }
 }

@@ -36,7 +36,7 @@ public class Runner implements Runnable {
     }
 
     public void updateSubmit() {
-        WS.url("http://localhost:9000/judger/updateSubmit").post(Json.toJson(submit));
+        WS.url(submit.server + "/judger/updateSubmit").post(Json.toJson(submit));
     }
 
     public void judge() {

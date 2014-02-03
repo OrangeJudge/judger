@@ -3,10 +3,7 @@ package judger.languages;
 import judger.Timer;
 import utils.OJException;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 
 public class LangC extends Language {
     public boolean timeLimitExceeded;
@@ -45,6 +42,7 @@ public class LangC extends Language {
             writer.println("chroot .");
             writer.println("ulimit -d 8192 -v 0 -m " + memoryLimit*1024);
             writer.println("./a.out < in.txt > out.txt 2> run_err.txt");
+            writer.println("trap 'echo EXIT' SIGINT");
             writer.close();
             System.out.println("run script created");
             Runtime r = Runtime.getRuntime();
@@ -53,6 +51,12 @@ public class LangC extends Language {
             System.out.println("run script make executable");
             process = r.exec("temp/run.sh");
             (new Timer(this, process, timeLimit)).start();
+            InputStream stdout = process.getInputStream();
+            BufferedReader reader = new BufferedReader (new InputStreamReader(stdout));
+            String line;
+            while ((line = reader.readLine ()) != null) {
+                System.out.println ("Stdout: " + line);
+            }
             process.waitFor();
             if (timeLimitExceeded) {
                 throw new OJException(302);
